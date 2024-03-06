@@ -69,10 +69,8 @@ function App() {
     setEditImage([]);
     setImage(updatedImage);
     setIsEdit(false);
-
-    console.log(updatedImage);
+    toast.success("Image Edited Successfully");
   };
-  console.log("img", editImage, image);
   return (
     <>
       <h1 className="text-center my-4 font-semibold text-xl">Image Uploader</h1>
@@ -117,6 +115,7 @@ function App() {
                       }}
                     >
                       <div className="flex flex-col items-center ">
+                        <h1 className="font-semibold my-2">Edit Image</h1>
                         <div className=" w-52 h-52 mx-auto border-2 overflow-hidden border-dotted border-[#a78bfa] flex items-center justify-center rounded-lg ">
                           {editImage?.length > 0 ? (
                             editImage?.map(
