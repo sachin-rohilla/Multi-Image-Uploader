@@ -5,19 +5,44 @@ import { useState } from "react";
 import InputComp from "./components/InputComp";
 import { IoIosCloseCircle } from "react-icons/io";
 import { MdEdit } from "react-icons/md";
+import Modal from "./components/Modal";
 
 function App() {
   const [image, setImage] = useState([]);
   const [isEdit, setIsEdit] = useState(false);
+  const [editImage, setEditImage] = useState([]);
+  const [modalIndex, setModalIndex] = useState(null);
   const handleImageChange = (event, index) => {
     const files = event.target.files[0];
-    setImage([
-      ...image,
-      {
-        id: index,
-        img: URL.createObjectURL(files),
-      },
-    ]);
+
+    if (isEdit) {
+      // const updatedImage = image.map((item) => {
+      //   if (item.id === index) {
+      //     return {
+      //       ...item,
+      //       img: URL.createObjectURL(files),
+      //     };
+      //   }
+      //   return item;
+      // });
+      // setImage(updatedImage);
+      setEditImage([
+        ...editImage,
+        {
+          id: index,
+          img: URL.createObjectURL(files),
+        },
+      ]);
+    } else {
+      setImage([
+        ...image,
+        {
+          id: index,
+          img: URL.createObjectURL(files),
+        },
+      ]);
+    }
+
     toast.success("Image Uploaded Successfully");
   };
 
@@ -25,7 +50,9 @@ function App() {
     setImage(image.filter((item) => item?.id !== id));
     toast.success("Image Deleted Successfully");
   };
-  console.log("img", image);
+
+  const handleEdit = (id) => {};
+  console.log("img", editImage);
   return (
     <>
       <h1 className="text-center my-4 font-semibold text-xl">Image Uploader</h1>
@@ -59,13 +86,53 @@ function App() {
                     className="text-2xl cursor-pointer  absolute top-8 right-2"
                     onClick={() => {
                       setIsEdit(true);
+                      setModalIndex(index + 1);
                     }}
                   />
+                  {isEdit && (
+                    <Modal
+                      handleClose={() => {
+                        setIsEdit(false);
+                        setEditImage([]);
+                      }}
+                    >
+                      <div className="flex flex-col items-center ">
+                        <div className=" w-52 h-52 mx-auto border-2 overflow-hidden border-dotted border-[#a78bfa] flex items-center justify-center rounded-lg ">
+                          {editImage?.length > 0 ? (
+                            editImage?.map(
+                              (data) =>
+                                data.id === modalIndex && (
+                                  <img
+                                    key={index}
+                                    src={data?.img}
+                                    alt="image"
+                                  />
+                                )
+                            )
+                          ) : (
+                            <InputComp
+                              handleImageChange={handleImageChange}
+                              index={modalIndex}
+                            />
+                          )}
+                        </div>
+                        {editImage?.length > 0 && (
+                          <button
+                            className="bg-[#a78bfa] py-2 text-white rounded-lg w-52  mt-2"
+                            onClick={() => handleEdit(modalIndex)}
+                          >
+                            Save
+                          </button>
+                        )}
+                      </div>
+                    </Modal>
+                  )}
                 </div>
               )}
           </div>
         ))}
       </div>
+
       <ToastContainer autoClose={2000} hideProgressBar />
     </>
   );
