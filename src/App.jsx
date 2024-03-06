@@ -8,6 +8,7 @@ import { MdEdit } from "react-icons/md";
 
 function App() {
   const [image, setImage] = useState([]);
+  const [isEdit, setIsEdit] = useState(false);
   const handleImageChange = (event, index) => {
     const files = event.target.files[0];
     setImage([
@@ -55,14 +56,16 @@ function App() {
                   />
                   {/* <MdEdit
                     className="text-2xl cursor-pointer  absolute top-8 right-2"
-                    onClick={() => {}}
+                    onClick={() => {
+                      setIsEdit(true);
+                    }}
                   /> */}
                 </div>
               )}
           </div>
         ))}
       </div>
-      <ToastContainer />
+      <ToastContainer autoClose={2000} hideProgressBar />
     </>
   );
 }
