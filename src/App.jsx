@@ -51,8 +51,28 @@ function App() {
     toast.success("Image Deleted Successfully");
   };
 
-  const handleEdit = (id) => {};
-  console.log("img", editImage);
+  const handleEdit = (id) => {
+    const updatedImage = image.map((item) => {
+      const matchingEditImage = editImage.find(
+        (editItem) => editItem.id === item.id
+      );
+
+      if (matchingEditImage) {
+        return {
+          ...item,
+          img: matchingEditImage.img,
+        };
+      }
+
+      return item;
+    });
+    setEditImage([]);
+    setImage(updatedImage);
+    setIsEdit(false);
+
+    console.log(updatedImage);
+  };
+  console.log("img", editImage, image);
   return (
     <>
       <h1 className="text-center my-4 font-semibold text-xl">Image Uploader</h1>
