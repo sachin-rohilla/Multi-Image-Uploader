@@ -1,20 +1,20 @@
 import React from "react";
 
-const InputComp = ({ handleImageChange }) => {
+const InputComp = ({ handleImageChange, index }) => {
   return (
-    <div className=" ">
+    <div>
       <label
-        htmlFor="fileInput"
+        htmlFor={`fileInput${index}`}
         className="cursor-pointer  text-[#a78bfa] font-semibold py-2 px-4 rounded-md"
       >
         Upload Image Here
       </label>
       <input
-        id="fileInput"
+        id={`fileInput${index}`}
         className="hidden"
         type="file"
         accept="image/*"
-        onChange={handleImageChange}
+        onChange={(e) => handleImageChange(e, index)}
       />
     </div>
   );
