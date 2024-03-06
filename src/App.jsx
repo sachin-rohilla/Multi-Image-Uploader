@@ -16,16 +16,6 @@ function App() {
     const files = event.target.files[0];
 
     if (isEdit) {
-      // const updatedImage = image.map((item) => {
-      //   if (item.id === index) {
-      //     return {
-      //       ...item,
-      //       img: URL.createObjectURL(files),
-      //     };
-      //   }
-      //   return item;
-      // });
-      // setImage(updatedImage);
       setEditImage([
         ...editImage,
         {
